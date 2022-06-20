@@ -6,11 +6,13 @@ const canvasOffsetX = canvas.offsetLeft;
 const canvasOffsetY = canvas.offsetTop;
 
 canvas.width = window.innerWidth - canvasOffsetX
+canvas.height = window.innerHeight - canvasOffsetY
 
 let isPainting = false;
 let linewidth = 5;
-let startX;
-let startY;
+let startX = 0;
+let startY = 0;
+let hue = 0;
 
 toolbar.addEventListener('click', e =>{
     if (e.target.id === 'clear'){
@@ -30,7 +32,7 @@ lineWidth = e.target.value;
 
 const draw = (e) => {
     if(!isPainting) {
-        return;
+        return; // stop fucntion running whn moused down
     }
     ctx.lineWidth = lineWidth;
     ctx.lineCap = 'round';
@@ -41,14 +43,13 @@ const draw = (e) => {
 
 canvas.addEventListener('mousedown', (e) =>{
     isPainting = true;
-    startX = e.clientX;
-    startY = e.clientY;
+    [startX, startY] = [e.clientX, e.clientY]
 })
 
 canvas.addEventListener('mouseup', (e) =>{
     isPainting = false;
     ctx.stroke();
-    ctx.beginPath;
+    ctx.beginPath();
 })
 
 canvas.addEventListener('mousemove', draw);
